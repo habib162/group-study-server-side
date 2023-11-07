@@ -48,6 +48,7 @@ async function run() {
 
         const userCollection = client.db("groupStudyDB").collection("users");
         const assignmentCollection = client.db("groupStudyDB").collection("assignments");
+        const SubmittedCollection = client.db("groupStudyDB").collection("submissions");
 
 
         // auth api
@@ -118,6 +119,18 @@ async function run() {
             const result = await assignmentCollection.updateOne(filter, Assignment);
             res.send(result);
           })
+
+        //   submitted assignment
+        app.post('/take-assignment', async (req, res) => {
+            const newSubmitted = req.body;
+            const result = await SubmittedCollection.insertOne(newSubmitted);
+            res.send(result);
+        })
+        app.get('/take-assignment', async (req, res) => {
+            const getAssignment = SubmittedCollection.find();
+            const result = await getAssignment.toArray();
+            res.send(result);
+        })
 
 
         // Send a ping to confirm a successful connection
