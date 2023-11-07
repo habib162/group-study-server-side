@@ -82,7 +82,6 @@ async function run() {
         // Assignment CRUD
         app.post('/assignment', async (req, res) => {
             const newAssignment = req.body;
-            console.log(newAssignment);
             const result = await assignmentCollection.insertOne(newAssignment);
             res.send(result);
         })
@@ -92,6 +91,33 @@ async function run() {
             const result = await getAssignment.toArray();
             res.send(result);
         })
+        app.get('/assignment/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log('id'.id);
+            const query = { _id: new ObjectId(id) }
+            const result = await assignmentCollection.findOne(query);
+            res.send(result);
+          })
+        app.delete('/assignment/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log(id);
+            const query = { _id: new ObjectId(id) }
+            const result = await assignmentCollection.deleteOne(query);
+            res.send(result);
+          })
+
+          app.put('/assignment/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) }
+            const updateAssignment = req.body;
+            const Assignment = {
+              $set: {
+               ...updateAssignment
+              }
+            }
+            const result = await assignmentCollection.updateOne(filter, Assignment);
+            res.send(result);
+          })
 
 
         // Send a ping to confirm a successful connection
