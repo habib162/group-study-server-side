@@ -49,6 +49,7 @@ async function run() {
         const userCollection = client.db("groupStudyDB").collection("users");
         const assignmentCollection = client.db("groupStudyDB").collection("assignments");
         const SubmittedCollection = client.db("groupStudyDB").collection("submissions");
+        const faqCollection = client.db("groupStudyDB").collection("faqs");
 
 
         // auth api
@@ -133,6 +134,12 @@ async function run() {
         })
 
 
+        // FAQs
+        app.get('/faqs', async (req, res) => {
+            const faq = faqCollection.find();
+            const result = await faq.toArray();
+            res.send(result);
+        })
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
