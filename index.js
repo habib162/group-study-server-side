@@ -12,7 +12,7 @@ app.use(cookieParser());
 app.use(
     cors(
         {
-            origin: ["http://localhost:5173"],
+            origin: ["https://storied-melba-be816d.netlify.app"],
             credentials: true
         }
     ));
@@ -61,7 +61,7 @@ async function run() {
             res.cookie('token', token,
                 {
                     httpOnly: true,
-                    secure: false,
+                    secure: true,
                     // sameSite: 'none'
 
                 })
