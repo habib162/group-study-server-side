@@ -132,6 +132,18 @@ async function run() {
             const result = await getAssignment.toArray();
             res.send(result);
         })
+        app.put('/take-assignment/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) }
+            const updateAssignment = req.body;
+            const Assignment = {
+              $set: {
+               ...updateAssignment
+              }
+            }
+            const result = await SubmittedCollection.updateOne(filter, Assignment);
+            res.send(result);
+          })
 
 
         // FAQs
